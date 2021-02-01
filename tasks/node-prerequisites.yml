@@ -28,9 +28,9 @@
   when: mount_flags_updated is changed
   register: system_daemon_reload
 
-- name: Allow dockerroot group to access Docker daemon
+- name: Allow docker group to access Docker daemon
   copy:
-    content: '{ "group": "dockerroot" }'
+    content: '{ "group": "{{ docker_group }}" }'
     dest: /etc/docker/daemon.json
   register: docker_daemon_config
 
@@ -44,10 +44,10 @@
     system_daemon_reload is changed or
     docker_daemon_config is changed
 
-- name: Add RKE SSH user to dockerroot group
+- name: Add RKE SSH user to docker group
   user:
     name: "{{ rke_ssh_user }}"
-    groups: [dockerroot]
+    groups: ["{{ docker_group }}"]
     append: yes
 
 - name: Ensure firewalld is started
