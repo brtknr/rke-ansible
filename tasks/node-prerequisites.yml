@@ -4,7 +4,7 @@
 
 - name: Install Docker
   yum:
-    name: docker
+    name: "{{ docker_package_name }}"
     state: latest
   register: docker_install
 
