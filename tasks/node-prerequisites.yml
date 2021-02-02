@@ -2,9 +2,14 @@
 
 # These tasks must be run on all Kubernetes nodes
 
+- name: Add Docker repo
+  get_url:
+    url: "https://download.docker.com/linux/centos/{{ docker_package_name }}.repo"
+    dest: "/etc/yum.repos.d/{{ docker_package_name }}.repo"
+
 - name: Install Docker
   yum:
-    name: "{{ docker_package_name }}"
+    name: "{{ docker_package_name }}-{{ docker_package_version }}"
     state: present
   register: docker_install
 
