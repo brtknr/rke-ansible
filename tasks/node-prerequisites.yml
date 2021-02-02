@@ -11,6 +11,7 @@
   yum:
     name: "{{ docker_package_name }}-{{ docker_package_version }}"
     state: present
+    allow_downgrade: yes
   register: docker_install
 
 - name: Make docker.service.d directory
@@ -32,6 +33,10 @@
     daemon_reload: yes
   when: mount_flags_updated is changed
   register: system_daemon_reload
+
+
+- name: Ensure /etc/docker exists
+  file: path=/etc/docker state=directory mode=0755
 
 - name: Allow docker group to access Docker daemon
   copy:
