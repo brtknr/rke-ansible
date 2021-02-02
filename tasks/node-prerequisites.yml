@@ -5,7 +5,7 @@
 - name: Install Docker
   yum:
     name: "{{ docker_package_name }}"
-    state: latest
+    state: present
   register: docker_install
 
 - name: Make docker.service.d directory
